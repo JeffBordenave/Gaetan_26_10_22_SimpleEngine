@@ -1,11 +1,2 @@
-﻿  Actor.cpp
-  Assets.cpp
-  Component.cpp
-  Gaetan_26_10_22 - SimpleEngine.cpp
-  Game.cpp
-  Renderer.cpp
-  Texture.cpp
-  Timer.cpp
-  Vector2.cpp
-  Generating Code...
-  Gaetan_26_10_22 - SimpleEngine.vcxproj -> C:\Users\geoffroy.bordenave\source\Cpp\Gaetan_26_10_22 - SimpleEngine\x64\Debug\Gaetan_26_10_22 - SimpleEngine.exe
+﻿  Laser.cpp
+  Gaetan_26_10_22 - SimpleEngine.vcxproj -> D:\Gaetan_26_10_22_SimpleEngine\x64\Debug\Gaetan_26_10_22 - SimpleEngine.exe

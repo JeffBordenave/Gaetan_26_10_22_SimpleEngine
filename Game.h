@@ -1,9 +1,11 @@
 #pragma once
 #include <vector>
+#include "Actor.h"
+#include "SpriteComponent.h"
 #include "Window.h"
 #include "Renderer.h"
 #include "Vector2.h"
-#include "Actor.h"
+#include "Astroid.h"
 using std::vector;
 
 class Game
@@ -33,6 +35,12 @@ public:
 	void addActor(Actor* actor);
 	void removeActor(Actor* actor);
 
+	Renderer& getRenderer() { return renderer; }
+	// Game specific
+	vector<Astroid*>& getAstroids();
+	void addAstroid(Astroid* astroid);
+	void removeAstroid(Astroid* astroid);
+
 private:
 	void processInput();
 	void update(float dt);
@@ -45,4 +53,7 @@ private:
 	bool isUpdatingActors;
 	vector<Actor*> actors;
 	vector<Actor*> pendingActors;
+
+	// Game specific
+	vector<Astroid*> astroids;
 };
