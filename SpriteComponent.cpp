@@ -10,7 +10,6 @@ SpriteComponent::SpriteComponent(Actor* ownerP, Texture& textureP, int drawOrder
 	texHeight(textureP.getHeight())
 {
 	owner.getGame().getRenderer().addSprite(this);
-	visible = true;
 }
 
 SpriteComponent::~SpriteComponent()
@@ -26,7 +25,7 @@ void SpriteComponent::setTexture(const Texture& textureP)
 
 void SpriteComponent::draw(Renderer& renderer)
 {
-	if (visible == false) 
+	if (isActive == false) 
 		return;
 
 	Vector2 origin{ texWidth / 2.f, texHeight / 2.f };

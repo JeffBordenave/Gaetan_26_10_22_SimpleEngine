@@ -12,29 +12,25 @@ public:
 
 	float getForwardSpeed() const { return forwardSpeed; }
 	float getAngularSpeed() const { return angularSpeed; }
-	float getMass() const { return mass; }
-	Vector2 getForce() const { return force; }
-	bool getIsActive() const { return isActive; }
+	/*float getMass() const { return mass; }
+	Vector2 getForce() const { return force; }*/
 
 	void setForwardSpeed(float forwardSpeedP);
 	void setAngularSpeed(float angularSpeedP);
-	void setMass(float massP);
+	/*void setMass(float massP);
 	void setForce(float forceP);
-	void setVelocity(Vector2 velocityP);
+	void setVelocity(Vector2 velocityP);*/
 
 	void update(float dt) override;
-	void activate();
-	void deactivate();
 
 
 private:
 	float forwardSpeed;
 	float angularSpeed;
-	bool isActive;
 
-	float mass;
+	/*float mass;
 	Vector2 force;
 	Vector2 acceleration;
-	Vector2 velocity;
+	Vector2 velocity;*/
 
 };

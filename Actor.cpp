@@ -48,6 +48,11 @@ Vector2 Actor::getForward() const
 	return Vector2(Maths::cos(rotation), -Maths::sin(rotation));
 }
 
+Vector2 Actor::getRight() const
+{
+	return Vector2(Maths::cos(rotation + Maths::toRadians(90)), -Maths::sin(rotation + Maths::toRadians(90)));
+}
+
 void Actor::processInput(const Uint8* keyState)
 {
 	if (state == Actor::ActorState::Active)

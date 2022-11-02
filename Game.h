@@ -56,4 +56,5 @@ private:
 
 	// Game specific
 	vector<Astroid*> astroids;
+	float asteroidSpawnCounter = 0;
 };

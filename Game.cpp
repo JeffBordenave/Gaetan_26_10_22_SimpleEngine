@@ -7,12 +7,16 @@
 #include "BackgroundSpriteComponent.h"
 #include "Astroid.h"
 #include "Ship.h"
+#include "EnemyChaser.h"
+#include "Log.h"
+#include <iostream>
 
 bool Game::initialize()
 {
 	bool isWindowInit = window.initialize();
 	bool isRendererInit = renderer.initialize(window);
 	return isWindowInit && isRendererInit; // Return bool && bool && bool ...to detect error
+	
 }
 
 void Game::load()
@@ -51,7 +55,7 @@ void Game::load()
 
 	// Controlled ship
 	Ship* ship = new Ship();
-	ship->setPosition(Vector2{ 100, 300 });
+	ship->setPosition(Vector2{ 100, 100 });
 
 	// Background
 	// Create the "far back" background
@@ -72,11 +76,9 @@ void Game::load()
 	BackgroundSpriteComponent* bgSpritesClose = new BackgroundSpriteComponent(bgClose, bgTexsClose, 50);
 	bgSpritesClose->setScrollSpeed(-200.0f);
 
-	const int astroidNumber = 20;
-	for (int i = 0; i < astroidNumber; ++i)
-	{
-		new Astroid();
-	}
+	EnemyChaser* enemyChaser = new EnemyChaser();
+	enemyChaser->target = ship;
+	enemyChaser->setPosition(Vector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
 }
 
 void Game::processInput()
@@ -108,8 +110,17 @@ void Game::processInput()
 	isUpdatingActors = false;
 }
 
+
+
 void Game::update(float dt)
 {
+	asteroidSpawnCounter += dt;
+	if (asteroidSpawnCounter >= 2) 
+	{
+		new Astroid();
+		asteroidSpawnCounter = 0;
+	}
+
 	// Update actors 
 	isUpdatingActors = true;
 	for (auto actor : actors)

@@ -14,19 +14,20 @@ Ship::Ship() : Actor()
 	ic = new InputComponent(this);
 	ic->setMaxForwardSpeed(300.0f);
 	ic->setMaxAngularSpeed(Maths::twoPi);
-	ic->setMass(100);
-	ic->setForce(1000);
+	/*ic->setMass(100);
+	ic->setForce(1000);*/
 	collision = new CircleCollisionComponent(this);
 	collision->setRadius(20.0f);
+	setRotation(Maths::toRadians(90));
 }
 
 void Ship::actorInput(const Uint8* keyState)
 {
-	if (keyState[SDL_SCANCODE_SPACE] && laserCooldown <= 0.0f && ic->getIsActive())
+	if (keyState[SDL_SCANCODE_SPACE] && laserCooldown <= 0.0f && ic->getActive())
 	{
 		Laser* laser = new Laser();
 		laser->setPosition(getPosition());
-		laser->setRotation(getRotation());
+		laser->setRotation(getRotation() - Maths::toRadians(90));
 		laserCooldown = 0.2f;
 	}
 }
@@ -40,8 +41,8 @@ void Ship::updateActor(float dt)
 		if (Intersect(*collision, astroid->getCollision()))
 		{
 			isHit = true;
-			ic->deactivate();
-			sc->visible = false;
+			ic->setActive(false);
+			sc->setActive(false);
 			break;
 		}
 	}
@@ -56,12 +57,12 @@ void Ship::deathCD(float dt)
 		deathCounter += dt;
 		if (deathCounter >= deathCooldown) 
 		{
-			ic->activate();
-			sc->visible = true;
+			ic->setActive(true);
+			sc->setActive(true);
 			isHit = false;
-			setPosition(Vector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
+			setPosition(Vector2(100, 100));
 			setRotation(0);
-			ic->setVelocity(Vector2::zero);
+			//ic->setVelocity(Vector2::zero);
 			deathCounter = 0;
 		}
 	}

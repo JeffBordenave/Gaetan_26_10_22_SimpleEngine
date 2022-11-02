@@ -6,11 +6,17 @@ Component::Component(Actor* ownerP, int updateOrderP) :
 	updateOrder(updateOrderP)
 {
 	owner.addComponent(this);
+	isActive = true;
 }
 
 Component::~Component()
 {
 	owner.removeComponent(this);
+}
+
+void Component::setActive(bool isActiveP)
+{
+	isActive = isActiveP;
 }
 
 void Component::processInput(const Uint8* keyState)

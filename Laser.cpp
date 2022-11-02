@@ -7,7 +7,7 @@
 
 Laser::Laser() :
 	Actor(),
-	deathTimer(1.0f),
+	deathTimer(3.0f),
 	collision(nullptr)
 {
 	new SpriteComponent(this, Assets::getTexture("Laser"));
@@ -15,14 +15,14 @@ Laser::Laser() :
 	collision = new CircleCollisionComponent(this);
 	collision->setRadius(11.0f);
 
-	mc->setForwardSpeed(0.0f);
-	mc->setMass(100);
-	mc->setForce(0);
+	mc->setForwardSpeed(305.0f);
+	/*mc->setMass(100);
+	mc->setForce(0);*/
 }
 
 void Laser::updateActor(float dt)
 {
-	mc->setVelocity(getForward() * 10);
+	//mc->setVelocity(getForward() * 10);
 	deathTimer -= dt;
 	if (deathTimer <= 0.0f)
 	{

@@ -18,8 +18,6 @@ public:
 	int getTexWidth() const { return texWidth; }
 	int getTexHeight() const { return texHeight; }
 
-	bool visible;
-
 protected:
 	Texture texture;
 	int drawOrder;

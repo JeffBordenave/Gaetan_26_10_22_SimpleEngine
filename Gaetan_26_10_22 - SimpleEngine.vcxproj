@@ -139,6 +139,7 @@
     <ClCompile Include="BackgroundSpriteComponent.cpp" />
     <ClCompile Include="CircleCollisionComponent.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="EnemyChaser.cpp" />
     <ClCompile Include="Gaetan_26_10_22 - SimpleEngine.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputComponent.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="BackgroundSpriteComponent.h" />
     <ClInclude Include="CircleCollisionComponent.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="EnemyChaser.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Laser.h" />

@@ -13,11 +13,14 @@ public:
 	Component& operator=(const Component&) = delete;
 
 	int getUpdateOrder() const { return updateOrder; }
+	bool getActive() const { return isActive; }
 
+	void setActive(bool isActiveP);
 	virtual void processInput(const Uint8* keyState);
 	virtual void update(float dt);
 
 protected:
 	Actor& owner;
-	int updateOrder;		// Order of the component in the actor's updateComponent method
+	int updateOrder;
+	bool isActive;
 };
