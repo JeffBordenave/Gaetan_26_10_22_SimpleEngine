@@ -6,6 +6,9 @@
 #include "Renderer.h"
 #include "Vector2.h"
 #include "Astroid.h"
+#include "EnemyChaser.h"
+#include "Ship.h"
+
 using std::vector;
 
 class Game
@@ -38,8 +41,11 @@ public:
 	Renderer& getRenderer() { return renderer; }
 	// Game specific
 	vector<Astroid*>& getAstroids();
+	vector<EnemyChaser*>& getEnemyChasers();
 	void addAstroid(Astroid* astroid);
+	void addEnemyChaser(EnemyChaser* chaser);
 	void removeAstroid(Astroid* astroid);
+	void removeEnemyChaser(EnemyChaser* chaser);
 
 private:
 	void processInput();
@@ -55,6 +61,11 @@ private:
 	vector<Actor*> pendingActors;
 
 	// Game specific
+	Ship* ship;
+
 	vector<Astroid*> astroids;
 	float asteroidSpawnCounter = 0;
+
+	vector<EnemyChaser*> enemyChasers;
+	float enemyChaserSpawnCounter = 0;
 };

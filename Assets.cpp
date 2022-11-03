@@ -23,7 +23,6 @@ Texture& Assets::getTexture(const string& name)
 
 void Assets::clear()
 {
-    // (Properly) delete all textures
     for (auto iter : textures)
         iter.second.unload();
     textures.clear();

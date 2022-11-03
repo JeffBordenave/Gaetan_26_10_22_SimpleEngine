@@ -21,7 +21,7 @@ void Texture::unload()
 bool Texture::load(Renderer& renderer, const string& filenameP)
 {
 	filename = filenameP;
-	// Load from file
+
 	SDL_Surface* surf = IMG_Load(filename.c_str());
 	if (!surf)
 	{
@@ -31,7 +31,6 @@ bool Texture::load(Renderer& renderer, const string& filenameP)
 	width = surf->w;
 	height = surf->h;
 
-	// Create texture from surface
 	SDLTexture = SDL_CreateTextureFromSurface(renderer.toSDLRenderer(), surf);
 	SDL_FreeSurface(surf);
 	if (!SDLTexture)

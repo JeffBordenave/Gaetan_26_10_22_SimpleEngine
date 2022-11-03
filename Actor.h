@@ -48,7 +48,7 @@ private:
 	ActorState state;
 	Vector2 position;
 	float scale;
-	float rotation;	// Rotation in radians
+	float rotation;
 
 	vector<Component*> components;
 };

@@ -1,10 +1,6 @@
 #include "Window.h"
 #include "Log.h"
 
-//cond1 fais qu'on a pas besoin de cette merde
-//Window::Window() : SDLWindow(nullptr), width(WINDOW_WIDTH), height(WINDOW_HEIGHT)
-//{}
-
 bool Window::initialize()
 {
 	int sdlInitResult = SDL_Init(SDL_INIT_VIDEO);

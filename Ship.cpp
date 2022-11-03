@@ -14,8 +14,6 @@ Ship::Ship() : Actor()
 	ic = new InputComponent(this);
 	ic->setMaxForwardSpeed(300.0f);
 	ic->setMaxAngularSpeed(Maths::twoPi);
-	/*ic->setMass(100);
-	ic->setForce(1000);*/
 	collision = new CircleCollisionComponent(this);
 	collision->setRadius(20.0f);
 	setRotation(Maths::toRadians(90));
@@ -36,9 +34,10 @@ void Ship::updateActor(float dt)
 {
 	laserCooldown -= dt;
 	auto astroids = getGame().getAstroids();
+	auto chaser = getGame().getAstroids();
 	for (auto astroid : astroids)
 	{
-		if (Intersect(*collision, astroid->getCollision()))
+		if (Intersect(*collision, astroid->getCollision()) || Intersect(*collision, astroid->getCollision()))
 		{
 			isHit = true;
 			ic->setActive(false);
@@ -61,8 +60,7 @@ void Ship::deathCD(float dt)
 			sc->setActive(true);
 			isHit = false;
 			setPosition(Vector2(100, 100));
-			setRotation(0);
-			//ic->setVelocity(Vector2::zero);
+			setRotation(Maths::toRadians(90));
 			deathCounter = 0;
 		}
 	}

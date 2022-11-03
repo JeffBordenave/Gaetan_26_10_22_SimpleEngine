@@ -24,39 +24,6 @@ void InputComponent::processInput(const Uint8* keyState)
 		forwardSpeed -= maxForwardSpeed;
 	}
 	setForwardSpeed(forwardSpeed);
-
-	/*float angularSpeed = 0.0f;
-	if (keyState[clockwiseKey])
-	{
-		angularSpeed -= maxAngularSpeed;
-	}
-	if (keyState[counterClockwiseKey])
-	{
-		angularSpeed += maxAngularSpeed;
-	}
-	setAngularSpeed(angularSpeed);*/
-	
-	/*float forwardSpeed = 0.0f;
-	if (keyState[forwardKey])
-	{
-		forwardSpeed += getForce().x;
-	}
-	if (keyState[backKey])
-	{
-		forwardSpeed -= getForce().x;
-	}
-	setForwardSpeed(forwardSpeed);
-
-	float angularSpeed = 0.0f;
-	if (keyState[clockwiseKey])
-	{
-		angularSpeed -= maxAngularSpeed;
-	}
-	if (keyState[counterClockwiseKey])
-	{
-		angularSpeed += maxAngularSpeed;
-	}
-	setAngularSpeed(angularSpeed);*/
 }
 
 void InputComponent::setMaxForwardSpeed(float maxForwardSpeedP)

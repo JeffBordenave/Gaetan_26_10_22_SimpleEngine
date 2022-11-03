@@ -5,6 +5,11 @@
 #include "MoveComponent.h"
 #include "Assets.h"
 #include "Ship.h"
+#include "Astroid.h"
+#include "Random.h"
+#include "Window.h"
+#include "Maths.h"
+#include "Assets.h"
 
 class EnemyChaser : public Actor
 {
@@ -20,5 +25,5 @@ public:
 
 private:
 	CircleCollisionComponent* collision;
-};
 
+};

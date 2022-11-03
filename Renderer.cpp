@@ -67,10 +67,10 @@ void Renderer::drawSprite(const Actor& actor, const Texture& tex, Rectangle srcR
 	Vector2 position = actor.getPosition();
 	float rotation = actor.getRotation();
 	float scale = actor.getScale();
-	// Scale the width/height by owner's scale
+
 	dstRect.w = static_cast<int>(tex.getWidth() * scale);
 	dstRect.h = static_cast<int>(tex.getHeight() * scale);
-	// Center the rectangle around the position of the owner
+
 	dstRect.x = static_cast<int>(position.x - origin.x);
 	dstRect.y = static_cast<int>(position.y - origin.y);
 
@@ -91,7 +91,7 @@ void Renderer::drawSprite(const Actor& actor, const Texture& tex, Rectangle srcR
 		srcSDL,
 		&dstRect,
 		-Maths::toDegrees(rotation),
-		nullptr,		// rotation point, center by default
+		nullptr,
 		SDL_FLIP_NONE);
 
 	delete srcSDL;
@@ -104,7 +104,6 @@ void Renderer::close()
 
 void Renderer::addSprite(SpriteComponent* sprite)
 {
-	// Insert the sprite at the right place in function of drawOrder
 	int spriteDrawOrder = sprite->getDrawOrder();
 	auto iter = begin(sprites);
 	for (; iter != end(sprites); ++iter)

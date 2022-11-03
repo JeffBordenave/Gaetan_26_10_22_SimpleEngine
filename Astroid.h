@@ -10,6 +10,8 @@ public:
 
 	CircleCollisionComponent& getCollision() { return *collision; }
 
+	void updateActor(float dt);
+
 private:
 	CircleCollisionComponent* collision;
 };

@@ -1,39 +1,39 @@
 #include "EnemyChaser.h"
 #include "Maths.h"
 #include <iostream>
+#include "Random.h"
+#include "Game.h"
 
 EnemyChaser::EnemyChaser()
 {
 	collision = new CircleCollisionComponent(this);
-	collision->setRadius(40.0f);
+	collision->setRadius(20.0f);
 	SpriteComponent* sc = new SpriteComponent(this, Assets::getTexture("Ship01"));
 	target = nullptr;
-	/*MoveComponent* mc = new MoveComponent(this);
-	mc->setForwardSpeed(0.0f);
-	mc->setMass(100);
-	mc->setForce(100);
-	mc->setVelocity(getForward() * 0);*/
+	MoveComponent* mc = new MoveComponent(this);
+	mc->setForwardSpeed(150);
+
+	Vector2 randPos = Random::getVector(Vector2(WINDOW_WIDTH - 100, 0), Vector2(WINDOW_WIDTH, WINDOW_HEIGHT));
+	setPosition(randPos);
+
+	setRotation(Maths::toRadians(180));
+
+	getGame().addEnemyChaser(this);
 }
 
 EnemyChaser::~EnemyChaser()
 {
+	getGame().removeEnemyChaser(this);
 }
 
 void EnemyChaser::updateActor(float dt) 
 {
 	Vector2 selfToTarget = target->getPosition() - getPosition();
-	float angleToTarget = Maths::acos(Vector2::dot(Vector2::normalize(selfToTarget), getForward()));
+	float angleToTarget = Vector2::dot(Vector2::normalize(selfToTarget), getRight());
 
-	//setRotation(Maths::acos((target.length() - getPosition().length()) / getForward().x));
-	//setRotation(angleToTarget);
-	//std::cout << getRotation() << "\n";
-	//std::cout << Vector2::dot(Vector2::normalize(selfToTarget), getForward()) << std::endl;
+	if (angleToTarget > 0) setRotation(getRotation() + dt/2);
+	else if (angleToTarget < 0) setRotation(getRotation() - dt/2);
 
-	float atan2 = Vector2::dot(Vector2::normalize(selfToTarget), getRight());
-
-	if (atan2 > 0) setRotation(getRotation() + dt);
-	else if (atan2 < 0) setRotation(getRotation() - dt);
-
-	//setRotation(getRotation() + 90);
+	if (Intersect(*collision, target->getCollision())) setState(ActorState::Dead);
+	else if (getPosition().x <= target->getPosition().x) setState(ActorState::Dead);
 }
-

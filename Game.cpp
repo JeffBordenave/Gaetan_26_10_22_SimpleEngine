@@ -6,8 +6,6 @@
 #include "Assets.h"
 #include "BackgroundSpriteComponent.h"
 #include "Astroid.h"
-#include "Ship.h"
-#include "EnemyChaser.h"
 #include "Log.h"
 #include <iostream>
 
@@ -15,13 +13,11 @@ bool Game::initialize()
 {
 	bool isWindowInit = window.initialize();
 	bool isRendererInit = renderer.initialize(window);
-	return isWindowInit && isRendererInit; // Return bool && bool && bool ...to detect error
-	
+	return isWindowInit && isRendererInit;
 }
 
 void Game::load()
 {
-	// Load textures
 	Assets::loadTexture(renderer, "Res\\Ship01.png", "Ship01");
 	Assets::loadTexture(renderer, "Res\\Ship02.png", "Ship02");
 	Assets::loadTexture(renderer, "Res\\Ship03.png", "Ship03");
@@ -33,14 +29,12 @@ void Game::load()
 	Assets::loadTexture(renderer, "Res\\Ship.png", "Ship");
 	Assets::loadTexture(renderer, "Res\\Laser.png", "Laser");
 
-	// Single sprite
 	/*
 	Actor* actor = new Actor();
 	SpriteComponent* sprite = new SpriteComponent(actor, Assets::getTexture("Ship01"));
 	actor->setPosition(Vector2{ 100, 100 });
 	*/
 
-	// Animated sprite
 	/*
 	vector<Texture*> animTextures {
 		&Assets::getTexture("Ship01"),
@@ -53,12 +47,9 @@ void Game::load()
 	ship->setPosition(Vector2{ 100, 300 });
 	*/
 
-	// Controlled ship
-	Ship* ship = new Ship();
+	ship = new Ship();
 	ship->setPosition(Vector2{ 100, 100 });
 
-	// Background
-	// Create the "far back" background
 	vector<Texture*> bgTexsFar{
 		&Assets::getTexture("Farback01"),
 		&Assets::getTexture("Farback02")
@@ -67,7 +58,6 @@ void Game::load()
 	BackgroundSpriteComponent* bgSpritesFar = new BackgroundSpriteComponent(bgFar, bgTexsFar);
 	bgSpritesFar->setScrollSpeed(-100.0f);
 
-	// Create the closer background
 	Actor* bgClose = new Actor();
 	std::vector<Texture*> bgTexsClose{
 		&Assets::getTexture("Stars"),
@@ -83,7 +73,6 @@ void Game::load()
 
 void Game::processInput()
 {
-	// SDL Event
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
@@ -94,14 +83,14 @@ void Game::processInput()
 			break;
 		}
 	}
-	// Keyboard state
+
 	const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
-	// Escape: quit game
+	
 	if (keyboardState[SDL_SCANCODE_ESCAPE])
 	{
 		isRunning = false;
 	}
-	// Actor input
+	
 	isUpdatingActors = true;
 	for (auto actor : actors)
 	{
@@ -109,8 +98,6 @@ void Game::processInput()
 	}
 	isUpdatingActors = false;
 }
-
-
 
 void Game::update(float dt)
 {
@@ -121,7 +108,14 @@ void Game::update(float dt)
 		asteroidSpawnCounter = 0;
 	}
 
-	// Update actors 
+	enemyChaserSpawnCounter += dt;
+	if (enemyChaserSpawnCounter >= 4)
+	{
+		EnemyChaser* enemyChaser = new EnemyChaser();
+		enemyChaser->target = ship;
+		enemyChaserSpawnCounter = 0;
+	}
+
 	isUpdatingActors = true;
 	for (auto actor : actors)
 	{
@@ -129,14 +123,12 @@ void Game::update(float dt)
 	}
 	isUpdatingActors = false;
 
-	// Move pending actors to actors
 	for (auto pendingActor : pendingActors)
 	{
 		actors.emplace_back(pendingActor);
 	}
 	pendingActors.clear();
 
-	// Delete dead actors
 	vector<Actor*> deadActors;
 	for (auto actor : actors)
 	{
@@ -163,9 +155,19 @@ vector<Astroid*>& Game::getAstroids()
 	return astroids;
 }
 
+vector<EnemyChaser*>& Game::getEnemyChasers()
+{
+	return enemyChasers;
+}
+
 void Game::addAstroid(Astroid* astroid)
 {
 	astroids.emplace_back(astroid);
+}
+
+void Game::addEnemyChaser(EnemyChaser* chaser)
+{
+	enemyChasers.emplace_back(chaser);
 }
 
 void Game::removeAstroid(Astroid* astroid)
@@ -174,6 +176,15 @@ void Game::removeAstroid(Astroid* astroid)
 	if (iter != astroids.end())
 	{
 		astroids.erase(iter);
+	}
+}
+
+void Game::removeEnemyChaser(EnemyChaser* chaser)
+{
+	auto iter = std::find(begin(enemyChasers), end(enemyChasers), chaser);
+	if (iter != enemyChasers.end())
+	{
+		enemyChasers.erase(iter);
 	}
 }
 
@@ -193,14 +204,11 @@ void Game::loop()
 
 void Game::unload()
 {
-	// Delete actors
-	// Because ~Actor calls RemoveActor, have to use a different style loop
 	while (!actors.empty())
 	{
 		delete actors.back();
 	}
 
-	// Resources
 	Assets::clear();
 }
 
